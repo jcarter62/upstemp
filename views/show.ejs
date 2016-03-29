@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<table>
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Location</td>
+        <td>Temp</td>
+        <td>Update</td>
+    </tr>
+    </thead>
+    <% for ( var i = 0; i < sites.length; i++ ) { %>
+    <tr>
+        <td>
+            <%= sites[i].name %>
+        </td>
+        <td>
+            <%= sites[i].location %>
+        </td>
+        <td>
+            <%= sites[i].temperature %>
+        </td>
+        <td>
+            <%= sites[i].tstamp %>
+        </td>
+    </tr>
+    <% } %>
+</table>
+<hr>
+<a href="/load">Re-Query Devices</a>
+</body>
+</html>
