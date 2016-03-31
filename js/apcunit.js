@@ -1,15 +1,18 @@
 var fs = require('fs');
 var snmp = require('net-snmp');
 
+/*
+ * Open an input json file for parameters, and output
+ * results into same name file in results directory.
+ *
+ * This module will request data from a APC UPS using
+ * the oids found in the input file.
+ */
 module.exports = function(apcName) {
 
-/*    if (process.argv.length < 3) {
-        console.log("usage: node " + process.argv[1] + " json-config-file ");
-        process.exit(1);
-    }
-*/
-    var configFile = apcName + '.json';
-    var config = JSON.parse(fs.readFileSync(__dirname + '/input/' + configFile)).ups;
+    var configFile = __dirname + '/../input/' + apcName + '.json';
+    console.log('configfile = ' + configFile );
+    var config = JSON.parse(fs.readFileSync(configFile)).ups;
     console.dir(config);
 
     var ip = config.ip;
@@ -64,7 +67,7 @@ module.exports = function(apcName) {
                 tstamp: tstamp
             };
 
-            var newfilename = __dirname + '/results/' + configFile;
+            var newfilename = __dirname + '/../results/' + apcName + '.json';
             console.log('File: ' + newfilename);
             fs.unlinkSync(newfilename);
             console.log('Unlinked...');

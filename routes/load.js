@@ -7,11 +7,9 @@ router.get('/', function(req, res, next) {
     if ( require.cache[loader] ) {
         delete require.cache[loader];
     }
-    loader = require( __dirname + '/../load');
+    loader = require( __dirname + '/../js/loadall');
+    delete loader;
 
-    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-    res.header('Expires', '-1');
-    res.header('Pragma', 'no-cache');
     res.render('load', {});
 });
 
