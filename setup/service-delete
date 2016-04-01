@@ -1,0 +1,5 @@
+#!/bin/sh
+cd ..
+stop upstemp
+forever-service delete upstemp
+
