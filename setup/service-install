@@ -1,4 +1,4 @@
 #!/bin/sh
 cd ..
-forever-service install -s "bin/www.js" upstemp
+forever-service install -s "bin/www" upstemp
 
