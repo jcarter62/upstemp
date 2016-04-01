@@ -3,14 +3,10 @@ var router = express.Router();
 
 /* Load */
 router.get('/', function(req, res, next) {
-    var loader;
-    if ( require.cache[loader] ) {
-        delete require.cache[loader];
-    }
-    loader = require( __dirname + '/../js/loadall');
-    delete loader;
-
+    var file = __dirname + '/../js/loadall';
+    require(file);
     res.render('load', {});
+    delete require.cache[require.resolve(file)];
 });
 
 module.exports = router;
