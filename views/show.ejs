@@ -10,14 +10,14 @@
 <main>
 
     <div class="row">
-        <div class="col-md-2 hidden-xs">Name</div>
+        <div class="col-md-2 visible-md visible-lg">Name</div>
         <div class="col-md-3 col-xs-5">Location</div>
         <div class="col-md-1 col-xs-2">Temp</div>
         <div class="col-md-3 col-xs-4">Time Stamp</div>
     </div>
     <% for ( var i = 0; i < sites.length; i++ ) { %>
     <div class="row <%= sites[i].rowclass %> ">
-        <div class="col-md-2 hidden-xs">
+        <div class="col-md-2 visible-md visible-lg">
             <%= sites[i].name %>
         </div>
         <div class="col-md-3 col-xs-5">
@@ -26,10 +26,10 @@
         <div class="col-md-1 col-xs-2">
             <%= sites[i].temperature %>
         </div>
-        <div class="col-md-3 hidden-xs">
+        <div class="col-md-3 visible-md visible-lg">
             <%= sites[i].tstamp %>
         </div>
-        <div class="col-xs-4 hidden-md ">
+        <div class="col-xs-4 visible-xs visible-sm">
             <%= sites[i].timestamp %>
         </div>
     </div>

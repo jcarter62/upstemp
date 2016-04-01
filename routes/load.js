@@ -5,7 +5,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     var file = __dirname + '/../js/loadall';
     require(file);
-    res.render('load', {});
+    res.render('load',
+        {
+            "title":"load"
+        });
     delete require.cache[require.resolve(file)];
 });
 

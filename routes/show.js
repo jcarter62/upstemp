@@ -3,18 +3,18 @@ var router = express.Router();
 var fs = require('fs');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
 
     var files = fs.readdirSync(__dirname + '/../results/');
 
     var sites = [];
 
-    for ( var i = 0; i < files.length; i++ ) {
+    for (var i = 0; i < files.length; i++) {
         var fname = __dirname + '/../results/' + files[i];
-        var onesite = JSON.parse( fs.readFileSync(fname) );
+        var onesite = JSON.parse(fs.readFileSync(fname));
 
         var rowclass;
-        switch ( onesite.status ) {
+        switch (onesite.status) {
             case "warn":
                 rowclass = "alert alert-warning";
                 break;
@@ -29,11 +29,14 @@ router.get('/', function(req, res, next) {
 
         sites.push(onesite);
     }
+    console.dir(sites);
 
     var v = {
-    "title": "Show Status",
-    "sites": sites
+        "title": "Show Status",
+        "sites": sites
     };
+
+    console.dir(req );
 
     res.render('show', v);
 

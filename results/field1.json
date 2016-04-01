@@ -1,9 +1,9 @@
 {
   "name": "APC3000-5points",
-  "temperature": "72",
+  "temperature": "70",
   "location": "5 Points",
-  "tstamp": "4/1/2016, 9:57:41 AM",
+  "tstamp": "4/1/2016, 12:55:07 PM",
   "status": "ok",
-  "timestamp": "9:57:41 AM",
-  "datenum": 1459529861000
+  "timestamp": "12:55:07 PM",
+  "datenum": 1459540507000
 }

@@ -8,8 +8,6 @@ router.get('/', function(req, res, next) {
     require(file);
     delete require.cache[require.resolve(file)];
 
-//    res.render('load', {});
-
     res.redirect('/show');
 });
 

@@ -17,6 +17,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -29,6 +30,10 @@ app.use('/', routes);
 app.use('/load', loader);
 app.use('/show', show);
 app.use('/loadandshow', loadandshow );
+
+// Misc local vars
+app.locals.bootstrap = __dirname + '/node_modules/bootstrap/dist/';
+app.use('/scripts', express.static(app.locals.bootstrap));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,7 +51,8 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err,
+      title: "dev"
     });
   });
 }
@@ -57,7 +63,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: {},
+    title: "error"
   });
 });
 
