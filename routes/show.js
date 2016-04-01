@@ -29,14 +29,11 @@ router.get('/', function (req, res, next) {
 
         sites.push(onesite);
     }
-    console.dir(sites);
 
     var v = {
         "title": "Show Status",
         "sites": sites
     };
-
-    console.dir(req );
 
     res.render('show', v);
 
