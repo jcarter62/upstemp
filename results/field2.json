@@ -1,6 +1,9 @@
 {
   "name": "APC3000-5points-Shop",
-  "temperature": "77",
+  "temperature": "75",
   "location": "5 Points  Shop",
-  "tstamp": "2016-04-01T05:22:19.391Z"
+  "tstamp": "4/1/2016, 9:57:41 AM",
+  "status": "ok",
+  "timestamp": "9:57:41 AM",
+  "datenum": 1459529861000
 }

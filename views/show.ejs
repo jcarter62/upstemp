@@ -1,42 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <% include ../views/partials/head %>
 </head>
-<body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<table>
-    <thead>
-    <tr>
-        <td>Name</td>
-        <td>Location</td>
-        <td>Temp</td>
-        <td>Update</td>
-    </tr>
-    </thead>
+<body class="container">
+<header>
+    <% include ../views/partials/header %>
+</header>
+<main>
+
+    <div class="row">
+        <div class="col-md-2 hidden-xs">Name</div>
+        <div class="col-md-3 col-xs-5">Location</div>
+        <div class="col-md-1 col-xs-2">Temp</div>
+        <div class="col-md-3 col-xs-4">Time Stamp</div>
+    </div>
     <% for ( var i = 0; i < sites.length; i++ ) { %>
-    <tr>
-        <td>
+    <div class="row <%= sites[i].rowclass %> ">
+        <div class="col-md-2 hidden-xs">
             <%= sites[i].name %>
-        </td>
-        <td>
+        </div>
+        <div class="col-md-3 col-xs-5">
             <%= sites[i].location %>
-        </td>
-        <td>
+        </div>
+        <div class="col-md-1 col-xs-2">
             <%= sites[i].temperature %>
-        </td>
-        <td>
+        </div>
+        <div class="col-md-3 hidden-xs">
             <%= sites[i].tstamp %>
-        </td>
-    </tr>
+        </div>
+        <div class="col-xs-4 hidden-md ">
+            <%= sites[i].timestamp %>
+        </div>
+    </div>
     <% } %>
-</table>
-<hr>
-<a href="/load">Re-Query Devices</a>
+    <hr>
+
+    <a href="/loadandshow">
+        <span class="glyphicon glyphicon-refresh "></span>
+    </a>
+
+    <hr>
+</main>
 </body>
+<% include ../views/partials/footer %>
+<script>
+    setTimeout(function () {
+        window.location.href = '/loadandshow'
+    }, 60000);
+</script>
 </html>

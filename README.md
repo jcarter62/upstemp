@@ -20,3 +20,7 @@ for each data item with suffix of oid.  Here is an example.
 When the user performs the /load function, the input directory should be interrogated, and similar files in results 
 should be created.  The /show function then loads the results, and displays current temperature and related data.
 
+---
+References: 
+https://scotch.io/tutorials/use-ejs-to-template-your-node-application
+https://fresnonodejs.slack.com/archives/advanced/p1459470758000027

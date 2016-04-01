@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 
 var loader = require('./routes/load');
 var show = require('./routes/show');
+var loadandshow = require('./routes/loadandshow');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/load', loader);
 app.use('/show', show);
+app.use('/loadandshow', loadandshow );
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

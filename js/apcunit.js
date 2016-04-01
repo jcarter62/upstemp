@@ -20,6 +20,8 @@ module.exports = function(apcName) {
     var NameOid = config.nameoid;
     var TempOid = config.tempoid;
     var LocationOid = config.locationoid;
+    var warn = config.warn;
+    var alarm = config.alarm;
 
     var OIds = [NameOid, LocationOid, TempOid];
 
@@ -58,13 +60,25 @@ module.exports = function(apcName) {
                 }
             }
             var ts = new Date();
-            var tstamp = ts.toISOString();
+            var tstamp; // = ts.toISOString();
+            tstamp = ts.toLocaleString();
+
+            var status = "ok";
+            if ( data >= warn ) {
+                status = "warn";
+            }
+            if ( data >= alarm ) {
+                status = "alarm";
+            }
 
             results = {
                 name: name,
                 temperature: data,
                 location: location,
-                tstamp: tstamp
+                tstamp: tstamp,
+                status: status,
+                timestamp: ts.toLocaleTimeString(),
+                datenum : Date.parse(tstamp)
             };
 
             var newfilename = __dirname + '/../results/' + apcName + '.json';

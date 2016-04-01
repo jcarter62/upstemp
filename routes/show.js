@@ -12,6 +12,21 @@ router.get('/', function(req, res, next) {
     for ( var i = 0; i < files.length; i++ ) {
         var fname = __dirname + '/../results/' + files[i];
         var onesite = JSON.parse( fs.readFileSync(fname) );
+
+        var rowclass;
+        switch ( onesite.status ) {
+            case "warn":
+                rowclass = "alert alert-warning";
+                break;
+            case "alarm":
+                rowclass = "alert alert-danger";
+                break;
+            default:
+                rowclass = "alert alert-success";
+                break;
+        }
+        onesite.rowclass = rowclass;
+
         sites.push(onesite);
     }
 
