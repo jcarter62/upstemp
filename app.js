@@ -6,9 +6,9 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
-var loader = require('./routes/load');
+//var loader = require('./routes/load');
 var show = require('./routes/show');
-var loadandshow = require('./routes/loadandshow');
+//var loadandshow = require('./routes/loadandshow');
 
 var app = express();
 
@@ -23,9 +23,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/load', loader);
+// app.use('/load', loader);
 app.use('/show', show);
-app.use('/loadandshow', loadandshow );
+// app.use('/loadandshow', loadandshow );
 
 // Misc local vars
 app.locals.rootdir = __dirname;
