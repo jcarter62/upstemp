@@ -2,4 +2,6 @@
 cd ..
 stop upstemp
 forever-service delete upstemp
+forever-service delete upscron
+
 

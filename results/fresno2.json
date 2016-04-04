@@ -1,9 +1,9 @@
 {
   "name": "Smart-UPS X 3000",
-  "temperature": "82",
+  "temperature": "71",
   "location": "Fresno Phone Room",
-  "tstamp": "4/1/2016, 4:10:53 PM",
-  "status": "warn",
-  "timestamp": "4:10:53 PM",
-  "datenum": 1459552253000
+  "tstamp": "4/4/2016, 2:07:38 PM",
+  "status": "ok",
+  "timestamp": "2:07:38 PM",
+  "datenum": 1459804058000
 }

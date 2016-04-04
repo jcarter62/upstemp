@@ -1,4 +1,5 @@
 #!/bin/sh
 cd ..
 forever-service install -s "bin/www" upstemp
+forever-service install -s "bin/cron.js" upscron
 

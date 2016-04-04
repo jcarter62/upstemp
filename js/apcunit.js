@@ -87,6 +87,27 @@ module.exports = function(apcName) {
             console.log('Unlinked...');
             fs.writeFileSync( newfilename, JSON.stringify(results, null, 2), 'utf-8');
             console.log('writeFile: ' + newfilename );
+
+            var histfile = __dirname + '/../history/' + apcName + '.json';
+            if ( ! fs.existsSync(histfile)  ) {
+                var h = { "history": [] };
+                fs.writeFileSync( histfile, JSON.stringify( h, null, 2), 'utf-8' );
+
+            }
+
+            var hist = JSON.parse( fs.readFileSync(histfile) );
+            var newHistoryRecord = {
+                name: name,
+                temperature: data,
+                status: status,
+                timestamp: ts.toLocaleTimeString(),
+            };
+
+            hist.history.push(newHistoryRecord);
+
+            console.dir(hist);
+            fs.writeFileSync( histfile, JSON.stringify( hist, null, 2 ), 'utf-8');
+//            fs.closeSync();
         }
     });
 

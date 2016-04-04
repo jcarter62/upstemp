@@ -13,4 +13,5 @@ module.exports = function() {
         apcUnit = new apc(filename);
         delete apcUnit;
     }
+
 }();
