@@ -15,7 +15,15 @@ router.get('/:id', function (req, res, next) {
     var data = [];
     var thisId;
 
-    for (var i = 0; i < history.length; i++) {
+    var skip = 1;
+
+    if ( history.length > 20 ) {
+        skip = history.length % 20;
+    }
+
+    console.log('skip = ' + skip );
+
+    for (var i = 0; i < history.length; i = i + skip) {
         console.log(i);
         labels.push(history[i].timestamp);
         data.push(history[i].temperature);
