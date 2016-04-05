@@ -16,23 +16,25 @@
         <div class="col-md-3 col-xs-4">Time Stamp</div>
     </div>
     <% for ( var i = 0; i < sites.length; i++ ) { %>
-    <div class="row <%= sites[i].rowclass %> ">
-        <div class="col-md-2 visible-md visible-lg">
-            <%= sites[i].name %>
+    <a href="/history/<%= sites[i].linkname %>">
+        <div class="row <%= sites[i].rowclass %> ">
+            <div class="col-md-2 visible-md visible-lg">
+                <%= sites[i].name %>
+            </div>
+            <div class="col-md-3 col-xs-5">
+                <%= sites[i].location %>
+            </div>
+            <div class="col-md-1 col-xs-2">
+                <%= sites[i].temperature %>
+            </div>
+            <div class="col-md-3 visible-md visible-lg">
+                <%= sites[i].tstamp %>
+            </div>
+            <div class="col-xs-4 visible-xs visible-sm">
+                <%= sites[i].timestamp %>
+            </div>
         </div>
-        <div class="col-md-3 col-xs-5">
-            <%= sites[i].location %>
-        </div>
-        <div class="col-md-1 col-xs-2">
-            <%= sites[i].temperature %>
-        </div>
-        <div class="col-md-3 visible-md visible-lg">
-            <%= sites[i].tstamp %>
-        </div>
-        <div class="col-xs-4 visible-xs visible-sm">
-            <%= sites[i].timestamp %>
-        </div>
-    </div>
+    </a>
     <% } %>
     <hr>
 

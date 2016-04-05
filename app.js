@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 //var loader = require('./routes/load');
 var show = require('./routes/show');
 //var loadandshow = require('./routes/loadandshow');
+var hist = require('./routes/history');
 
 var app = express();
 
@@ -26,10 +27,12 @@ app.use('/', routes);
 // app.use('/load', loader);
 app.use('/show', show);
 // app.use('/loadandshow', loadandshow );
+app.use('/history', hist);
 
 // Misc local vars
 app.locals.rootdir = __dirname;
 app.use('/scripts', express.static(__dirname + '/node_modules/bootstrap/dist/'));
+app.use('/chartjs', express.static(__dirname + '/node_modules/chart.js/'));
 app.use('/static', express.static(__dirname + '/public/'));
 
 // uncomment after placing your favicon in /public
