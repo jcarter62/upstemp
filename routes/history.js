@@ -6,7 +6,7 @@ var fs = require('fs');
 router.get('/:id', function (req, res, next) {
 
     var id = req.params.id;
-    var file = __dirname + '/../history/' + id ;
+    var file = __dirname + '/../history/' + id + '.json' ;
     var history = JSON.parse(fs.readFileSync(file)).history;
 
     console.dir(history);
