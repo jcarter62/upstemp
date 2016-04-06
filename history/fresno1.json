@@ -1859,6 +1859,12 @@
       "temperature": "73",
       "status": "ok",
       "timestamp": "18:05:01"
+    },
+    {
+      "name": "APC-3000MXL-CR",
+      "temperature": "73",
+      "status": "ok",
+      "timestamp": "18:10:01"
     }
   ]
 }

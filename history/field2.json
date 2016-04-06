@@ -1865,6 +1865,12 @@
       "temperature": "77",
       "status": "ok",
       "timestamp": "18:05:01"
+    },
+    {
+      "name": "APC3000-5points-Shop",
+      "temperature": "77",
+      "status": "ok",
+      "timestamp": "18:10:01"
     }
   ]
 }
