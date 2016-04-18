@@ -31,4 +31,5 @@ node_modules
 
 # Other directories to ignore
 .idea
+test
 

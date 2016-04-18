@@ -1,43 +1,46 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
+var fb = require('firebase');
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-
-    var files = fs.readdirSync(__dirname + '/../results/');
-
     var sites = [];
+    var fbRef = new fb('https://upstemp.firebaseio.com/');
+    var fbData;
 
-    for (var i = 0; i < files.length; i++) {
-        var fname = __dirname + '/../results/' + files[i];
-        var onesite = JSON.parse(fs.readFileSync(fname));
+    fbRef.child('results').on('value', function (snapshot) {
+        fbData = snapshot.val();
 
-        var rowclass;
-        switch (onesite.status) {
-            case "warn":
-                rowclass = "alert alert-warning";
-                break;
-            case "alarm":
-                rowclass = "alert alert-danger";
-                break;
-            default:
-                rowclass = "alert alert-success";
-                break;
+        for ( var item in fbData ) {
+            var onesite = fbData[item];
+
+            var rowclass;
+            switch (onesite.status) {
+                case "warn":
+                    rowclass = "alert alert-warning";
+                    break;
+                case "alarm":
+                    rowclass = "alert alert-danger";
+                    break;
+                default:
+                    rowclass = "alert alert-success";
+                    break;
+            }
+            onesite.rowclass = rowclass;
+            onesite.linkname = "";
+
+            sites.push(onesite);
         }
-        onesite.rowclass = rowclass;
-        onesite.linkname = files[i].substring(0, files[i].length - 5 );
 
-        sites.push(onesite);
-    }
+        var v = {
+            "title": "Show Status",
+            "sites": sites
+        };
 
-    var v = {
-        "title": "Show Status",
-        "sites": sites
-    };
-
-    res.render('show', v);
-
+        res.render('show', v);
+        res.end();
+    });
 });
 
 module.exports = router;
