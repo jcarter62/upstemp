@@ -1,7 +1,20 @@
 var fb = require('firebase');
 var Snmp = require('net-snmp');
-
 var sites = {};
+var urlRoot = 'https://upstemp.firebaseio.com/';
+var fbRef = new fb(urlRoot);
+
+var ItemsToProcess = 0;
+
+function saveHistory(unit) {
+    var url = urlRoot + 'history/' + unit.name;
+    var fbHist = new fb(url);
+    var histRef = fbHist.child('data');
+    var newHist = histRef.push().set(unit, function (error) {
+        ItemsToProcess--;
+    });
+
+}
 
 function load1Site(Unit) {
 
@@ -66,16 +79,25 @@ function load1Site(Unit) {
                 var child = 'results/' + Unit.results.name;
                 console.log('child = ' + child);
                 var resultsRef = fbRef.child(child);
-                resultsRef.set(Unit.results);
-                ItemsToProcess --;
+
+                var setOnComplete = function (error) {
+                    if (error) {
+                        console.log('Synchronization failed for child=' + child);
+                    } else {
+                        // need to save history.
+                        ItemsToProcess++;
+                        saveHistory(Unit.results);
+                    }
+                    // results completed with or without error.
+                    ItemsToProcess--;
+                };
+                // Save the results for this unit
+                resultsRef.set(Unit.results, setOnComplete);
             }
         });
 
 }
 
-var fbRef = new fb('https://upstemp.firebaseio.com/');
-
-var ItemsToProcess = 0;
 
 fbRef.child('sites').on('value', function (snapshot) {
     sites = snapshot.val();
