@@ -31,5 +31,7 @@ node_modules
 
 # Other directories to ignore
 .idea
+/cron/logs
+/cron/test.js
 test
 
