@@ -5,7 +5,7 @@ var os = require('os');
 var logDate = new Date();
 var logDate = logDate.getFullYear().toString() +
     leftpad(( logDate.getMonth() + 1 ).toString(), 2, '0') +
-    logDate.getDate().toString();
+    leftpad(logDate.getDate().toString(), 2, '0');
 var logFileName = os.tmpdir() + '/upstemp-' + logDate + '.log';
 var msg;
 
@@ -17,13 +17,14 @@ log4js.addAppender(log4js.appenders.file(logFileName), 'cron');
 var logger = log4js.getLogger('cron');
 
 msg = logDate.toString();
-logger.info(msg);
+qLog(msg);
 
-logger.info('removeold Start');
 
-var sites = {};
 var urlRoot = 'https://upstemp.firebaseio.com/';
 var fbRef = new fb(urlRoot + 'history/');
+var workQueue = 0;
+
+qLog('removeold Start');
 
 function leftpad(str, len, ch) {
     str = String(str);
@@ -36,65 +37,93 @@ function leftpad(str, len, ch) {
     return str;
 }
 
+/*
 function removeHistory(unit) {
-    logger.info('+removeHistory %s', unit.name);
+ qLog('+removeHistory %s', unit.name);
 }
+ */
 
 // https://upstemp.firebaseio.com/history
 fbRef.once('value',
     function (snapshot) {
 
         snapshot.forEach(function (childSnap) {
+            workQueue++;
             var key = childSnap.key();
-
             removeOldRecords(key);
+            workQueue--;
         })
     },
     function (errorObj) {
-        logger.info('history Read Failed: ' + errorObj.code);
+        qLog('history Read Failed: ' + errorObj.code);
     }
 );
 
 // determine time stamp of 3 days ago (in ms).
-var timeLimit = Date.now() - ( 3 * 24 * 60 * 60 * 1000 );
+var timeConsideredOld = Date.now() - ( 3 * 24 * 60 * 60 * 1000 );
 
 function removeOldRecords(siteName) {
     var pathToData = urlRoot + 'history/' + siteName + '/data';
     var fbHist = new fb(pathToData);
 
+    workQueue++;
     fbHist.once('value',
         function (snap) {
 
             snap.forEach(function (childSnap) {
                 var key = childSnap.key();
                 var dat = childSnap.val();
+                workQueue++;
 
-                if (dat.dateNum < timeLimit) {
+                if (dat.dateNum < timeConsideredOld) {
                     var rmKey = pathToData + '/' + key;
                     var refDel = new fb(rmKey);
+                    var logMsg;
+                    workQueue++;
+                    logMsg = 'Del Queue:key=' + key;
+                    qLog(logMsg);
                     refDel.remove(function (error) {
+                        workQueue--;
+                        logMsg = 'key=' + key;
                         if (error) {
-                            console.log('History Rec Del failed');
+                            qLog('Del Fail' + logMsg);
                         } else {
-                            console.log('History Rec Del succeeded');
+                            qLog('Del Okay:' + logMsg);
                         }
                     });
                 }
+                workQueue--;
             });
         },
         function (errorObj) {
-            logger.info('removeOldRecords, failed read' + errorObj.code);
+            qLog('removeOldRecords, failed read' + errorObj.code);
         }
     );
+    workQueue--;
+}
+
+function qLog(msg) {
+    var s = msg + ', Q=' + workQueue;
+    logger.info(s);
 }
 
 var msSince1970 = Date.now();
-var msIn30 = msSince1970 + (60 * 1000);
+var msIn30 = msSince1970 + (30 * 1000);
+var msIn5 = msSince1970 + ( 5 * 1000 );
 
+// check to see if we need to exit every 2 seconds.
 setInterval(function () {
     var msNow = Date.now();
+
+    // Exit application when workQueue is zero, and 5 seconds elapsed.
+    if (( workQueue <= 0 ) && ( msNow > msIn5 )) {
+        qLog('workQueue empty, normal exit ****');
+        process.exit();
+    }
+
+    // Timeout after 30 seconds.
     if (msNow > msIn30) {
-        logger.info("Timeout Exit **** ");
+        qLog('Timeout Exit ****');
         process.exit();
     }
 }, 2000);

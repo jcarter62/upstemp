@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var fb = require('firebase');
 
 /* /history route */
 router.get('/:id', function (req, res, next) {
@@ -21,6 +22,46 @@ router.get('/:id', function (req, res, next) {
 
 
     var id = req.params.id;
+    var fbRef = new fb('https://upstemp.firebaseio.com/history/' + id + '/data');
+
+    fbRef.once('value',
+        function (snap) {
+
+            // for each data record, push the record on to
+            //
+            snap.forEach(function (childSnap) {
+                var key = childSnap.key();
+                var dat = childSnap.val();
+
+
+                if (dat.dateNum < timeConsideredOld) {
+                    var rmKey = pathToData + '/' + key;
+                    var refDel = new fb(rmKey);
+                    var logMsg;
+                    workQueue++;
+                    logMsg = 'Del Queue:key=' + key;
+                    qLog(logMsg);
+                    refDel.remove(function (error) {
+                        workQueue--;
+                        logMsg = 'key=' + key;
+                        if (error) {
+                            qLog('Del Fail' + logMsg);
+                        } else {
+                            qLog('Del Okay:' + logMsg);
+                        }
+                    });
+                }
+                workQueue--;
+            });
+        },
+        function (errorObj) {
+            qLog('removeOldRecords, failed read' + errorObj.code);
+        }
+    );
+
+
+
+
     var file = __dirname + '/../history/' + id + '.json' ;
     var history = JSON.parse(fs.readFileSync(file)).history;
 
