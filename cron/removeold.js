@@ -8,6 +8,7 @@ var logDate = logDate.getFullYear().toString() +
     leftpad(logDate.getDate().toString(), 2, '0');
 var logFileName = os.tmpdir() + '/upstemp-' + logDate + '.log';
 var msg;
+var workQueue = 0;
 
 console.info('Logfile: ' + logFileName);
 
@@ -22,7 +23,6 @@ qLog(msg);
 
 var urlRoot = 'https://upstemp.firebaseio.com/';
 var fbRef = new fb(urlRoot + 'history/');
-var workQueue = 0;
 
 qLog('removeold Start');
 

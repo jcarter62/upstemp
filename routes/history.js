@@ -6,6 +6,8 @@ var fb = require('firebase');
 /* /history route */
 router.get('/:id', function (req, res, next) {
 
+    var workQueue = 0;
+
     // Returns a number as string, of size length, zero padded.
     var zeroPad = function(num, size) {
         var n = num.toString();
@@ -30,27 +32,10 @@ router.get('/:id', function (req, res, next) {
             // for each data record, push the record on to
             //
             snap.forEach(function (childSnap) {
+                workQueue++;
                 var key = childSnap.key();
                 var dat = childSnap.val();
 
-
-                if (dat.dateNum < timeConsideredOld) {
-                    var rmKey = pathToData + '/' + key;
-                    var refDel = new fb(rmKey);
-                    var logMsg;
-                    workQueue++;
-                    logMsg = 'Del Queue:key=' + key;
-                    qLog(logMsg);
-                    refDel.remove(function (error) {
-                        workQueue--;
-                        logMsg = 'key=' + key;
-                        if (error) {
-                            qLog('Del Fail' + logMsg);
-                        } else {
-                            qLog('Del Okay:' + logMsg);
-                        }
-                    });
-                }
                 workQueue--;
             });
         },
