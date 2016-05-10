@@ -1,3 +1,4 @@
+require('newrelic');
 var fb = require('firebase');
 var log4js = require('log4js');
 var os = require('os');

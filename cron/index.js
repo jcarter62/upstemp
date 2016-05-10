@@ -1,4 +1,5 @@
 "use strict";
+require('newrelic');
 
 var fb = require('firebase');
 var Snmp = require('net-snmp');
