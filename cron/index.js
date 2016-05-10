@@ -1,3 +1,5 @@
+"use strict";
+
 var fb = require('firebase');
 var Snmp = require('net-snmp');
 var log4js = require('log4js');

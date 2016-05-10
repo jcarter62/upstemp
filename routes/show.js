@@ -28,7 +28,7 @@ router.get('/', function (req, res, next) {
                     break;
             }
             onesite.rowclass = rowclass;
-            onesite.linkname = "";
+            onesite.linkname = onesite.name;
 
             sites.push(onesite);
         }
